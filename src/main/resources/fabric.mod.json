@@ -9,7 +9,8 @@
 	],
 	"contact": {
 		"homepage": "https://modrinth.com/mod/personalspace",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"sources": "https://github.com/hiisuuii/personal-space",
+		"issues": "https://github.com/hiisuuii/personal-space/issues"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/personal-space/icon.png",
