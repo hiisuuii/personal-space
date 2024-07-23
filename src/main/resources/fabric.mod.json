@@ -1,0 +1,31 @@
+{
+	"schemaVersion": 1,
+	"id": "personal-space",
+	"version": "${version}",
+	"name": "Personal Space",
+	"description": "Hide players that get too close!",
+	"authors": [
+		"hisui"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/personalspace",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/personal-space/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"client": [
+			"mod.hisui.personalspace.PersonalSpace"
+		]
+	},
+	"mixins": [
+		"personal-space.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.15.11",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
