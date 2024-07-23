@@ -36,37 +36,6 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 		}
 	}
 
-	/*
-	@ModifyReturnValue(method = "getRenderLayer",at = @At("RETURN"))
-	private @Nullable RenderLayer modify(@Nullable RenderLayer original, T entity, boolean showBody, boolean translucent, boolean showOutline){
-		if(PersonalSpace.ENABLED && showBody && entity instanceof OtherClientPlayerEntity otherPerson){
-			double distance = this.dispatcher.getSquaredDistanceToCamera(otherPerson);
-			if(distance <= PersonalSpace.MIN_DISTANCE) {
-				return null;
-			}
-		}
-		return original;
-	}
-
-	@ModifyArg(method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
-	at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/LivingEntityRenderer;getRenderLayer(Lnet/minecraft/entity/LivingEntity;ZZZ)Lnet/minecraft/client/render/RenderLayer;"),
-	index = 2)
-	private boolean adjust(T livingEntity, boolean showBody, boolean translucent, boolean showOutline){
-		if(PersonalSpace.ENABLED && showBody && livingEntity instanceof OtherClientPlayerEntity otherPerson){
-			double distance = this.dispatcher.getSquaredDistanceToCamera(otherPerson);
-			if(distance <= PersonalSpace.MAX_DISTANCE) {
-				return true;
-			}
-		}
-		return translucent;
-	}
-
-	@ModifyReturnValue(method = "hasLabel(Lnet/minecraft/entity/LivingEntity;)Z",at = @At("RETURN"))
-	private boolean mod(boolean original, T livingEntity) {
-		return original;
-	}
-
-	*/
 	@ModifyExpressionValue(slice =
 	@Slice(from = @At(value = "INVOKE",
 			target = "Lnet/minecraft/entity/LivingEntity;isInvisibleTo(Lnet/minecraft/entity/player/PlayerEntity;)Z")),
@@ -87,7 +56,6 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 				if (distance < PersonalSpace.MIN_DISTANCE) {
 					distance = PersonalSpace.MIN_DISTANCE;
 				}
-
 
 				// Perform linear interpolation
 				int interpolatedValue = (int) Math.round(minValue + (distance - PersonalSpace.MIN_DISTANCE) * (maxValue - minValue) / (PersonalSpace.MAX_DISTANCE - PersonalSpace.MIN_DISTANCE));
