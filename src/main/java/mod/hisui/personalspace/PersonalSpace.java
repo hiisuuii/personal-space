@@ -2,15 +2,13 @@ package mod.hisui.personalspace;
 
 import mod.hisui.personalspace.config.Config;
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.ModInitializer;
-
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.option.KeyBinding;
-import net.minecraft.client.option.StickyKeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +20,7 @@ public class PersonalSpace implements ClientModInitializer {
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
     public static final Logger LOGGER = LoggerFactory.getLogger("personal-space");
+
 	private static final File CONFIG_PATH = FabricLoader.getInstance().getConfigDir().resolve("personal_space.json").toFile();
 	public static Config CONFIG = Config.loadConfigFile(CONFIG_PATH);
 	public static double MIN_DISTANCE = Math.pow(CONFIG.minimum_distance, 2);
@@ -41,7 +40,7 @@ public class PersonalSpace implements ClientModInitializer {
 				CONFIG.enabled = !CONFIG.enabled;
 				ENABLED = CONFIG.enabled;
 				CONFIG.saveConfigFile(CONFIG_PATH);
-				client.player.sendMessage(Text.of("%s player hiding.".formatted(ENABLED ? "Enabled" : "Disabled")),true);
+				if(client.player != null) client.player.sendMessage(Text.literal("%s player hiding.".formatted(ENABLED ? "Enabled" : "Disabled")).formatted(ENABLED ? Formatting.GREEN : Formatting.RED),true);
 			}
 		});
 	}
