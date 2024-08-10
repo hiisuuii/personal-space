@@ -20,7 +20,7 @@ public abstract class EntityRenderDispatcherMixin {
 
     @WrapOperation(method = "render",at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/entity/EntityRenderDispatcher;renderShadow(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;Lnet/minecraft/entity/Entity;FFLnet/minecraft/world/WorldView;F)V"))
     private void wrapRenderShadow(MatrixStack matrices, VertexConsumerProvider vertexConsumers, Entity entity, float opacity, float tickDelta, WorldView world, float radius, Operation<Void> original){
-        if(PersonalSpace.ENABLED && entity instanceof OtherClientPlayerEntity otherPerson) {
+        if(PersonalSpace.ENABLED && entity instanceof OtherClientPlayerEntity otherPerson && !PersonalSpace.isIgnored(otherPerson)) {
             double distance = this.getSquaredDistanceToCamera(otherPerson);
             double minDistance = PersonalSpace.MIN_DISTANCE;
             if (distance <= minDistance) {

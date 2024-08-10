@@ -10,6 +10,7 @@ import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.util.math.Direction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,8 +29,8 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 	@Inject(method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
 	at = @At("HEAD"), cancellable = true)
 	private void cancelRender(T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci){
-		if(PersonalSpace.ENABLED && this.isVisible(livingEntity) && livingEntity instanceof OtherClientPlayerEntity otherPerson){
-			double distance = this.dispatcher.getSquaredDistanceToCamera(otherPerson);
+		if(PersonalSpace.ENABLED && this.isVisible(livingEntity) && livingEntity instanceof OtherClientPlayerEntity otherPerson && !PersonalSpace.isIgnored(otherPerson)){
+			double distance = this.dispatcher.camera.getPos().squaredDistanceTo(otherPerson.getPos().offset(Direction.UP, 0.5));
 			if(distance <= PersonalSpace.MIN_DISTANCE && PersonalSpace.MIN_OPACITY == 0) {
 				ci.cancel();
 			}
@@ -41,10 +42,10 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 			target = "Lnet/minecraft/entity/LivingEntity;isInvisibleTo(Lnet/minecraft/entity/player/PlayerEntity;)Z")),
 			at = @At(value = "CONSTANT", args = "intValue=-1", ordinal = 0),
 			method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
-	private int init(int original, T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
+	private int changeOpacity(int original, T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
 
 		boolean bl = this.isVisible(livingEntity);
-		if(PersonalSpace.ENABLED && bl && livingEntity instanceof OtherClientPlayerEntity otherPerson){
+		if(PersonalSpace.ENABLED && bl && livingEntity instanceof OtherClientPlayerEntity otherPerson && !PersonalSpace.isIgnored(otherPerson)){
 			double distance = this.dispatcher.getSquaredDistanceToCamera(otherPerson);
 			if(distance <= PersonalSpace.MAX_DISTANCE) {
 

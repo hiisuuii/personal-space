@@ -1,3 +1,7 @@
 {
-  "key.personalspace.toggle": "Toggle Personal Space"
+  "key.categories.personalspace": "Personal Space",
+  "key.personalspace.toggle": "Toggle Personal Space",
+  "key.personalspace.ignore": "Add/Remove to Ignore List",
+  "personalspace.added": "You added '%s' to your ignore-list. They will not be hidden. Press again to remove.",
+  "personalspace.removed": "You removed '%s' from your ignore-list. They will be hidden once again. Press again to add."
 }
