@@ -19,11 +19,13 @@ public class SkinLayersCompatMixin {
     private float adjustOpacityFor3D(float alpha){
         LivingEntity livingEntity = PersonalSpace.TEMP_OWNER;
         if(livingEntity != null) {
-            PersonalSpace.LOGGER.info("Modifying 3D Skin Opacity");
             boolean bl = !livingEntity.isInvisible();
             int intAlpha = (int) (alpha * 255);
             if (PersonalSpace.ENABLED && bl && livingEntity instanceof OtherClientPlayerEntity otherPerson && !PersonalSpace.isIgnored(otherPerson)) {
-                return ((PersonalSpace.getOpacityForDistance(otherPerson) << 24) | (0x00FFFFFF & intAlpha)) / 255.0f;
+                PersonalSpace.LOGGER.info("Modifying 3D Skin Opacity");
+                // TODO this doesnt work
+                float value = ((PersonalSpace.getOpacityForDistance(otherPerson) << 24) | (0x00FFFFFF & intAlpha)) / 255.0f;
+                return value;
             }
         }
         return alpha;
