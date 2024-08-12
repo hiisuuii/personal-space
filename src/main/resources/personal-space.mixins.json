@@ -9,10 +9,12 @@
     "ArmorFeatureRendererMixin",
     "CapeFeatureRendererMixin",
     "EntityRenderDispatcherMixin",
-    "LivingEntityRendererMixin",
     "ItemRendererMixin",
+    "LivingEntityRendererMixin",
     "ModelPartMixin",
     "PlayerEntityModelMixin",
-    "RenderLayerMixin"
+    "PlayerEntityRendererMixin",
+    "RenderLayerMixin",
+    "compat.SkinLayersCompatMixin"
   ]
 }
