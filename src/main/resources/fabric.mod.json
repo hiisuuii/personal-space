@@ -12,6 +12,7 @@
 		"sources": "https://github.com/hiisuuii/personal-space",
 		"issues": "https://github.com/hiisuuii/personal-space/issues"
 	},
+	"accessWidener": "personalspace.accesswidener",
 	"license": "CC0-1.0",
 	"icon": "assets/personal-space/icon.png",
 	"environment": "client",

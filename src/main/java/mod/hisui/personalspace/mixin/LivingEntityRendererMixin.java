@@ -42,26 +42,10 @@ public abstract class LivingEntityRendererMixin<T extends LivingEntity, M extend
 			target = "Lnet/minecraft/entity/LivingEntity;isInvisibleTo(Lnet/minecraft/entity/player/PlayerEntity;)Z")),
 			at = @At(value = "CONSTANT", args = "intValue=-1", ordinal = 0),
 			method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V")
-	private int changeOpacity(int original, T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
-
+	private int modifyPlayerOpacity(int original, T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
 		boolean bl = this.isVisible(livingEntity);
 		if(PersonalSpace.ENABLED && bl && livingEntity instanceof OtherClientPlayerEntity otherPerson && !PersonalSpace.isIgnored(otherPerson)){
-			double distance = this.dispatcher.getSquaredDistanceToCamera(otherPerson);
-			if(distance <= PersonalSpace.MAX_DISTANCE) {
-
-				// Define the minimum and maximum value
-				int minValue = PersonalSpace.MIN_OPACITY;
-				int maxValue = PersonalSpace.MAX_OPACITY;
-
-				// Ensure the distance is within the specified range
-				if (distance < PersonalSpace.MIN_DISTANCE) {
-					distance = PersonalSpace.MIN_DISTANCE;
-				}
-
-				// Perform linear interpolation
-				int interpolatedValue = (int) Math.round(minValue + (distance - PersonalSpace.MIN_DISTANCE) * (maxValue - minValue) / (PersonalSpace.MAX_DISTANCE - PersonalSpace.MIN_DISTANCE));
-				return (interpolatedValue << 24) | 0x00FFFFFF;
-			}
+			return (PersonalSpace.getOpacityForDistance(otherPerson) << 24) | (0x00FFFFFF & original);
 		}
 
 		return original;

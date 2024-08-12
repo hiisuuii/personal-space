@@ -6,7 +6,13 @@
     "defaultRequire": 1
   },
   "client": [
+    "ArmorFeatureRendererMixin",
+    "CapeFeatureRendererMixin",
+    "EntityRenderDispatcherMixin",
+    "ItemRendererMixin",
     "LivingEntityRendererMixin",
-    "EntityRenderDispatcherMixin"
+    "ModelPartMixin",
+    "PlayerEntityModelMixin",
+    "RenderLayerMixin"
   ]
 }

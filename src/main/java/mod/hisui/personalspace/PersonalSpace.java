@@ -10,12 +10,14 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.OtherClientPlayerEntity;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.math.Direction;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,6 +81,26 @@ public class PersonalSpace implements ClientModInitializer {
 			}
 		});
 		ClientLifecycleEvents.CLIENT_STOPPING.register(client -> saveIgnoreList(IGNORELIST_PATH));
+	}
+
+	public static int getOpacityForDistance(OtherClientPlayerEntity ocpe) {
+		double distance = MinecraftClient.getInstance().getEntityRenderDispatcher().camera.getPos().squaredDistanceTo(ocpe.getPos().offset(Direction.UP, 0.5));
+		if(distance <= PersonalSpace.MAX_DISTANCE) {
+
+			// Define the minimum and maximum value
+			int minValue = PersonalSpace.MIN_OPACITY;
+			int maxValue = PersonalSpace.MAX_OPACITY;
+
+			// Ensure the distance is within the specified range
+			if (distance < PersonalSpace.MIN_DISTANCE) {
+				distance = PersonalSpace.MIN_DISTANCE;
+			}
+
+			// Perform linear interpolation
+			return (int) Math.round(minValue + (distance - PersonalSpace.MIN_DISTANCE) * (maxValue - minValue) / (PersonalSpace.MAX_DISTANCE - PersonalSpace.MIN_DISTANCE));
+		} else {
+			return 0xFF;
+		}
 	}
 
 	public static boolean isIgnored(OtherClientPlayerEntity ocpe){
