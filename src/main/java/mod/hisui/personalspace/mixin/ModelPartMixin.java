@@ -4,7 +4,6 @@ import mod.hisui.personalspace.PersonalSpace;
 import mod.hisui.personalspace.impl.ModelPartCloakAccess;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.network.OtherClientPlayerEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -37,7 +36,6 @@ public abstract class ModelPartMixin implements ModelPartCloakAccess {
             LivingEntity livingEntity = PersonalSpace.TEMP_OWNER;
             boolean bl = !livingEntity.isInvisible();
             if(PersonalSpace.ENABLED && bl && livingEntity instanceof OtherClientPlayerEntity otherPerson && !PersonalSpace.isIgnored(otherPerson)){
-                PersonalSpace.LOGGER.info("Modifying cape opacity");
                 return (PersonalSpace.getOpacityForDistance(otherPerson) << 24) | (0x00FFFFFF & original);
             }
         }
