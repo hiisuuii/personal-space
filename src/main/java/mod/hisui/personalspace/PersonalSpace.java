@@ -48,7 +48,7 @@ public class PersonalSpace implements ClientModInitializer {
 	public static boolean ENABLED = CONFIG.enabled;
 
 	// TODO MOVE THIS INTO ITS OWN SINGLETON
-	public static AbstractClientPlayerEntity TEMP_OWNER = null;
+	public static AbstractClientPlayerEntity TEMP_OWNER = null; // TODO REFACTOR THIS TO BE ASSIGNED EARLIER
 	public static boolean RENDERING_CLOAK = false;
 
 	public static LongList IGNORE_LIST = loadIgnoreList(IGNORELIST_PATH);
