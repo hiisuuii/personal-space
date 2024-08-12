@@ -9,8 +9,8 @@
     "ArmorFeatureRendererMixin",
     "CapeFeatureRendererMixin",
     "EntityRenderDispatcherMixin",
-    "ItemRendererMixin",
     "LivingEntityRendererMixin",
+    "ItemRendererMixin",
     "ModelPartMixin",
     "PlayerEntityModelMixin",
     "RenderLayerMixin"

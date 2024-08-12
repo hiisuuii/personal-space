@@ -33,10 +33,11 @@ public abstract class ModelPartMixin implements ModelPartCloakAccess {
     at = @At(value = "INVOKE", target = "Lnet/minecraft/client/model/ModelPart;render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumer;III)V"),
     index = 4)
     private int modifyOpacity(int original){
-        if(this.personalspace$isCloak){
-            LivingEntity livingEntity = personalspace$owningEntity;
+        if(PersonalSpace.RENDERING_CLOAK && PersonalSpace.TEMP_OWNER != null){
+            LivingEntity livingEntity = PersonalSpace.TEMP_OWNER;
             boolean bl = !livingEntity.isInvisible();
             if(PersonalSpace.ENABLED && bl && livingEntity instanceof OtherClientPlayerEntity otherPerson && !PersonalSpace.isIgnored(otherPerson)){
+                PersonalSpace.LOGGER.info("Modifying cape opacity");
                 return (PersonalSpace.getOpacityForDistance(otherPerson) << 24) | (0x00FFFFFF & original);
             }
         }
