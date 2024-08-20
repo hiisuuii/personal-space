@@ -5,7 +5,9 @@ import mod.hisui.personalspace.util.WrappedVertexProvider;
 import net.minecraft.client.network.OtherClientPlayerEntity;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
+import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,10 +16,11 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @SuppressWarnings("rawtypes")
 @Mixin(PlayerEntityRenderer.class)
-public abstract class PlayerEntityRendererMixin extends LivingEntityRendererMixin {
+public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer {
 
-    protected PlayerEntityRendererMixin(EntityRendererFactory.Context ctx) {
-        super(ctx);
+
+    public PlayerEntityRendererMixin(EntityRendererFactory.Context ctx, EntityModel model, float shadowRadius) {
+        super(ctx, model, shadowRadius);
     }
 
     @ModifyArg(method = "render(Lnet/minecraft/client/network/AbstractClientPlayerEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",

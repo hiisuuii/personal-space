@@ -6,7 +6,9 @@
     "defaultRequire": 1
   },
   "client": [
+    "EntityRenderDispatcherMixin",
     "LivingEntityRendererMixin",
-    "PlayerEntityRendererMixin"
+    "PlayerEntityRendererMixin",
+    "RenderLayerMixin"
   ]
 }
